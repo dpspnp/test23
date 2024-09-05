@@ -52,59 +52,48 @@ let dishes = [
 ];
 
 
-let currentDishIndex = 0;
-let nextDishIndex = 1;
 
-const leftDishElement = document.getElementById("left-dish");
-const rightDishElement = document.getElementById("right-dish");
-const leftDishName = document.getElementById("left-dish-name");
-const rightDishName = document.getElementById("right-dish-name");
+let currentDishIndex = 1;
+let currentDish = dishes[0];
 
-function updateDishElements() {
-    leftDishElement.src = dishes[currentDishIndex].image;
-    leftDishName.innerText = dishes[currentDishIndex].name;
-    rightDishElement.src = dishes[nextDishIndex].image;
-    rightDishName.innerText = dishes[nextDishIndex].name;
-}
+// Select dish elements
+let leftImage = document.getElementById('left-dish-img');
+let rightImage = document.getElementById('right-dish-img');
+let leftName = document.getElementById('left-dish-name');
+let rightName = document.getElementById('right-dish-name');
 
-document.getElementById("left-button").addEventListener("click", function () {
-    dishes[currentDishIndex].votes += 1;
-    nextDishIndex++;
-    if (nextDishIndex >= dishes.length) {
-        nextDishIndex = 0; // Reset to the first dish if the end is reached
-    }
-    updateDishElements();
-    updateLeaderboard();
-});
+// Initialize images and names
+leftImage.src = currentDish.img;
+leftName.innerHTML = currentDish.name;
+rightImage.src = dishes[currentDishIndex].img;
+rightName.innerHTML = dishes[currentDishIndex].name;
 
-document.getElementById("right-button").addEventListener("click", function () {
-    currentDishIndex = nextDishIndex;
-    dishes[currentDishIndex].votes += 1;
-    nextDishIndex++;
-    if (nextDishIndex >= dishes.length) {
-        nextDishIndex = 0; // Reset to the first dish if the end is reached
-    }
-    updateDishElements();
-    updateLeaderboard();
-});
+function chooseDish(side) {
+    // Record the vote
+    let chosenDish = (side === 'left') ? currentDish.name : dishes[currentDishIndex].name;
 
-function updateLeaderboard() {
-    let sortedDishes = [...dishes].sort((a, b) => b.votes - a.votes);
-    let leaderboardContent = document.getElementById('leaderboard-content');
-    leaderboardContent.innerHTML = '';
-
-    sortedDishes.slice(0, 10).forEach(dish => {
-        let item = document.createElement('div');
-        item.classList.add('leaderboard-item');
-        item.innerHTML = `
-            <img src="${dish.image}" alt="${dish.name}">
-            <div class="dish-name">${dish.name}</div>
-            <div class="votes">${dish.votes} votes</div>
-        `;
-        leaderboardContent.appendChild(item);
+    // Send vote to the server
+    fetch('vote_server.php', {
+        method: 'POST',
+        body: JSON.stringify({ dish: chosenDish }),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json()).then(data => {
+        console.log(data.message);
     });
-}
 
-// Initialize the first two dishes
-updateDishElements();
-updateLeaderboard();
+    // Update current dish
+    currentDish = (side === 'left') ? currentDish : dishes[currentDishIndex];
+    currentDishIndex++;
+
+    // Check if the game is over
+    if (currentDishIndex >= dishes.length) {
+        alert("THANK YOU FOR YOUR SERVICE, FOR YOU WE WILL KNOW WHAT IS THE BEST DISH");
+        return;
+    }
+
+    // Update the images and names
+    leftImage.src = currentDish.img;
+    leftName.innerHTML = currentDish.name;
+    rightImage.src = dishes[currentDishIndex].img;
+    rightName.innerHTML = dishes[currentDishIndex].name;
+}
