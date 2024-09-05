@@ -1,0 +1,13 @@
+function loadDishes() {
+    const dish1 = dishes[currentDish1];
+    const dish2 = dishes[currentDish2];
+
+    // Debugging: Log the image URLs to verify
+    console.log(dish1.img, dish2.img); // Check if URLs are correct
+
+    // Update the images and names
+    document.getElementById("dish1-img").src = dish1.img;
+    document.getElementById("dish1-name").innerText = dish1.name;
+    document.getElementById("dish2-img").src = dish2.img;
+    document.getElementById("dish2-name").innerText = dish2.name;
+}
