@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DishMash - Rate Your Favorite Dishes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .header {
+            background-color: #8B0000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .main-content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .dish-comparison {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .dish {
+            text-align: center;
+            width: 45%;
+        }
+        .dish img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .dish-name {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .leaderboard {
+            margin-top: 40px;
+        }
+        .leaderboard h2 {
+            text-align: center;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .leaderboard-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .leaderboard-item .dish-name {
+            flex-grow: 1;
+        }
+        .leaderboard-item .votes {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        DishMash
+    </div>
+    <div class="main-content">
+        <h2>Which dish do you prefer? Click to choose.</h2>
+        <div class="dish-comparison">
+            <div class="dish">
+                <img id="left-dish" src="" alt="Dish 1">
+                <div id="left-dish-name" class="dish-name">Dish Name 1</div>
+                <button id="left-button" class="button">Left</button>
+            </div>
+            <div class="dish">
+                <img id="right-dish" src="" alt="Dish 2">
+                <div id="right-dish-name" class="dish-name">Dish Name 2</div>
+                <button id="right-button" class="button">Right</button>
+            </div>
+        </div>
+        <div class="leaderboard">
+            <h2>Top 10 Dishes</h2>
+            <div id="leaderboard-content">
+                <!-- Leaderboard items will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
